@@ -31,6 +31,7 @@ module.exports={client}
 //insertSingleData()
 
 //---------------------------------------------//
+
 // insert Multiple data
 
 const insertManyData=async()=>{
@@ -53,8 +54,7 @@ const insertManyData=async()=>{
       await client.close()
    }
 }
-
-        insertManyData()
+       // insertManyData()
 
 // ------------ Find single data-------------
 
@@ -107,7 +107,7 @@ const findMultipleData=async()=>{
 }
      //findMultipleData()
 
-     //----// Update Single Data---------
+     // Update Single Data---------
 
      const singleUpdateData=async()=>{
       try {
@@ -202,6 +202,7 @@ const findMultipleData=async()=>{
       }
   
      }
+     
     // deleteMultipleData()
 
 
