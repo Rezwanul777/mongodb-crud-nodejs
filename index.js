@@ -16,7 +16,7 @@ module.exports={client}
       const doc={
          name:'Rezwanul Haque',
          city:'Bogura',
-         age:'39',
+         age:39,
          profession:'Full Stack developer'
       }
       const result= await users.insertOne(doc)
@@ -37,7 +37,7 @@ const insertManyData=async()=>{
    try {
       const database = client.db("Company");
       const users= database.collection("Developers") 
-      // create doc
+      // create data
       const data=[
          {name:"Ayaan" , city:"Dhaka" ,age:12,profession:"Front-End Developer"},
          {name:"Raidah" , city:"Naogoan" ,age:17,profession:"Back-End Developer"},
@@ -56,5 +56,87 @@ const insertManyData=async()=>{
 
        //insertManyData()
 
+// ------------ Find single data-------------
+
+const findSingleData=async()=>{
+   try {
+      const database = client.db("Company");
+      const users= database.collection("Developers")
+      const query={name:"Ayaan"}
+
+      const result=await users.findOne(query)
+      console.log(result);
+
+   } catch (error) {
+      console.log(error);
+   }finally{
+      await client.close()
+   }
+}
+
+//findSingleData()
+
+//----- findMultiple Data---------
+
+const findMultipleData=async()=>{
+   try {
+      const database = client.db("Company");
+      const users= database.collection("Developers")
+      const query={}
+      const options = {
+   
+         sort: { profession:1 },
+         projection: { name:1},
+   
+       };
+
+       const cursor=users.find(query,options)
+       if((await cursor.countDocuments===0)){
+         console.log('No datas are found');
+       }else{
+         const datas=await cursor.toArray()
+         datas.forEach((data)=>{
+            console.log(data);
+         })
+       }
+   } catch (error) {
+      console.log(error);
+   }finally{
+      await client.close()
+   }
+}
+     //findMultipleData()
+
+     //----// Update Single Data---------
+
+     const singleUpdateData=async()=>{
+      try {
+         const database = client.db("Company");
+         const users= database.collection("Developers")
+         // create a filter for a user to update
+
+    const filter = { name: "Ayaan" };
+    // this option instructs the method to create a document if no documents match the filter
+    const options = { upsert: true };
+    const updateDoc = {
+      $set: {
+       name: 'Ayaan Bin Rezwan',
+       age:22
+      },    
+    };
+    const result = await users.updateOne(filter, updateDoc, options);
+    console.log(
+      `${result.matchedCount} datas matched the filter, updated ${result.modifiedCount} datas`,
+    );
+      } catch (error) {
+         console.log(error);
+      }finally{
+         await client.close()
+      }
+     }
+
+    // singleUpdateData()
+
+    
 
 
