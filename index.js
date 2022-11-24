@@ -1,6 +1,7 @@
 const {MongoClient}=require('mongodb')
 require('dotenv').config()
 
+// database connected
 const client=new MongoClient(process.env.DATABASE)
 console.log('Database connected');
 
@@ -28,6 +29,32 @@ module.exports={client}
 }
 
 //insertSingleData()
+
+//---------------------------------------------//
+// insert Multiple data
+
+const insertManyData=async()=>{
+   try {
+      const database = client.db("Company");
+      const users= database.collection("Developers") 
+      // create doc
+      const data=[
+         {name:"Ayaan" , city:"Dhaka" ,age:12,profession:"Front-End Developer"},
+         {name:"Raidah" , city:"Naogoan" ,age:17,profession:"Back-End Developer"},
+         {name:"Shimu" , city:"Rajshahi" ,age:38,profession:"DevOps Engineer"},
+      ]
+
+      const result=await users.insertMany(data)
+      console.log(`${result.insertedCount} datas were inserted`);
+
+   } catch (error) {
+       console.log(error);
+   }finally{
+      await client.close()
+   }
+}
+
+       //insertManyData()
 
 
 
