@@ -14,10 +14,10 @@ module.exports={client}
       const database = client.db("Company");
       const users= database.collection("Developers")
       const doc={
-         name:'Rezwanul Haque',
+         name:'Shimu',
          city:'Bogura',
-         age:39,
-         profession:'Full Stack developer'
+         age:38,
+         profession:'Python developer'
       }
       const result= await users.insertOne(doc)
       console.log(result);
@@ -39,9 +39,9 @@ const insertManyData=async()=>{
       const users= database.collection("Developers") 
       // create data
       const data=[
-         {name:"Ayaan" , city:"Dhaka" ,age:12,profession:"Front-End Developer"},
-         {name:"Raidah" , city:"Naogoan" ,age:17,profession:"Back-End Developer"},
-         {name:"Shimu" , city:"Rajshahi" ,age:38,profession:"DevOps Engineer"},
+         {name:"Rezwanul Haque" , city:"Bogura" ,age:39,profession:"Front-End Developer"},
+         // {name:"Raidah" , city:"Naogoan" ,age:17,profession:"Back-End Developer"},
+         {name:"Shimu" , city:"Bogura" ,age:38,profession:"DevOps Engineer"},
       ]
 
       const result=await users.insertMany(data)
@@ -54,7 +54,7 @@ const insertManyData=async()=>{
    }
 }
 
-       //insertManyData()
+        insertManyData()
 
 // ------------ Find single data-------------
 
@@ -137,6 +137,73 @@ const findMultipleData=async()=>{
 
     // singleUpdateData()
 
-    
+    //--- Multiple datas update----------------
+
+    const multipleUpdateData=async()=>{
+      try {
+         const database = client.db("Company");
+         const users= database.collection("Developers")
+         const filter = { };
+         // update doc
+         const updateDoc = {
+            $set: {
+           country:"Bangladesh",
+      }
+   }
+   const result = await users.updateMany(filter, updateDoc);
+   console.log(`Updated ${result.modifiedCount} documents`);
+
+      } catch (error) {
+         console.log(error);
+      }finally{
+         await client.close()
+      }
+    }
+
+    //multipleUpdateData()
+
+    //---- Single Delete data------
+
+    const singleDeleteData=async()=>{
+      try {
+         const database = client.db("Company");
+         const users= database.collection("Developers")
+         const query = { name: "Shimu" };
+         const result = await users.deleteOne(query);
+         if(result.deletedCount===1){
+            console.log('Data delete succeefully');
+         }else{
+            console.log('Data delete failed');
+         }
+      } catch (error) {
+         console.log(error);
+      }finally{
+         await client.close();  
+      }
+    }
+
+    //singleDeleteData()
+
+    //----- Delete Multiple Data----------
+
+    const deleteMultipleData=async()=>{
+      try {
+         const database = client.db("Company");
+         const users= database.collection("Developers")
+         const query = {city:"Bogura" };
+         const result = await users.deleteMany(query);
+         console.log("Deleted " + result.deletedCount + " datas");
+     
+       } catch (error) {
+         console.log(error);
+      }
+       finally {
+        await client.close();
+      }
+  
+     }
+    // deleteMultipleData()
+
+
 
 
